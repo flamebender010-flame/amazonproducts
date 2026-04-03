@@ -7,6 +7,297 @@
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
+/* ===== ROOT (LIGHT MODE DEFAULT) ===== */
+:root{
+    --navy:#131921;
+    --light-navy:#232f3e;
+    --orange:#f3a847;
+
+    --bg:#eaeded;
+    --text:#111;
+    --card-bg:#ffffff;
+    --btn-bg:#ffa41c;
+}
+
+/* ===== NIGHT MODE ===== */
+body.night{
+    --navy:#0b111a;
+    --light-navy:#1a2233;
+    --orange:#ff9900;
+
+    --bg:#0f1620;
+    --text:#eeeeee;
+    --card-bg:#1c2433;
+    --btn-bg:#ff9900;
+}
+
+/* ===== BODY ===== */
+body{
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* ===== HEADER ===== */
+header{
+    background: var(--navy);
+}
+
+/* ===== CARD ===== */
+.card{
+    background: var(--card-bg);
+    transition: 0.3s;
+}
+
+/* ===== BUTTON ===== */
+.btn{
+    background: var(--btn-bg);
+    color:#111;
+}
+
+body.night .btn{
+    color:#111;
+}
+
+/* ===== SEARCH ===== */
+.search-input{
+    background: #fff;
+    color: #111;
+}
+
+body.night .search-input{
+    background: #1c2433;
+    color: #fff;
+}
+
+/* ===== CATEGORY SIDEBAR ===== */
+.category-nav{
+    background: var(--light-navy);
+}
+
+body.night .category-nav{
+    background: #0f1620;
+}
+
+/* ===== CATEGORY BUTTON ===== */
+.cat-btn{
+    color:#fff;
+}
+
+body.night .cat-btn{
+    color:#ddd;
+}
+
+.cat-btn.active{
+    background: var(--orange);
+    color:#111;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-thumb{
+    background: var(--orange);
+    border-radius:10px;
+}
+
+/* ===== SMOOTH TRANSITION ===== */
+*{
+    transition: background 0.3s ease, color 0.3s ease;
+}.search-container{
+    position: relative;
+    width: 100%;
+    max-width: 260px;
+}
+
+/* ===== INPUT ===== */
+.search-input{
+    width: 100%;
+    padding: 10px 14px 10px 38px;
+
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.08);
+
+    background: #fff;
+    color: #111;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    transition: all 0.25s ease;
+}
+
+/* placeholder */
+.search-input::placeholder{
+    color: #999;
+}
+
+/* ===== ICON ===== */
+.search-icon{
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #888;
+    transition: 0.25s;
+}
+
+/* ===== HOVER ===== */
+.search-input:hover{
+    border-color: rgba(0,0,0,0.2);
+}
+
+/* ===== FOCUS ===== */
+.search-input:focus{
+    outline: none;
+    border-color: var(--orange);
+
+    box-shadow: 0 0 0 3px rgba(243,168,71,0.25);
+}
+
+/* icon focus */
+.search-container:focus-within .search-icon{
+    color: var(--orange);
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* ===== NIGHT MODE ===== */
+body.night .search-input{
+    background: #1c2433;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+body.night .search-input::placeholder{
+    color: #aaa;
+}
+
+body.night .search-input:focus{
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px rgba(255,153,0,0.25);
+}
+/* ===== CATEGORY NAV (SIDEBAR) ===== */
+.category-nav{
+    position:fixed;
+    left:-260px;
+    top:0;
+    width:240px;
+    height:100vh;
+
+    backdrop-filter: blur(15px);
+    background: rgba(20,25,35,0.9);
+
+    padding:80px 20px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+
+    transition:.4s ease;
+    z-index:999;
+}
+
+body.night .category-nav{
+    background: rgba(10,15,25,0.95);
+}
+
+.category-nav.open{
+    left:0;
+}
+
+/* ===== CATEGORY BUTTON ===== */
+.cat-btn{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:12px 14px;
+    border-radius:12px;
+
+    cursor:pointer;
+    color:#fff;
+    font-weight:600;
+    letter-spacing:0.5px;
+
+    transition: all 0.3s ease;
+}
+
+/* hover efekti */
+.cat-btn:hover{
+    background: rgba(255,255,255,0.08);
+    transform: translateX(8px);
+}
+
+/* aktif kategori */
+.cat-btn.active{
+    background: linear-gradient(135deg, var(--orange), #ff6a00);
+    color:#111;
+    box-shadow: 0 0 20px rgba(255,165,0,0.5);
+}
+
+/* ===== ICON STYLE ===== */
+.cat-btn i{
+    min-width:35px;
+    height:35px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+    font-size:15px;
+
+    background: rgba(255,255,255,0.08);
+
+    transition:0.3s;
+}
+
+/* hover icon animasyon */
+.cat-btn:hover i{
+    transform: rotate(10deg) scale(1.1);
+}
+
+/* aktif icon */
+.cat-btn.active i{
+    background:#fff;
+    color:var(--orange);
+}
+.cat-btn i {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    color: #fff;
+
+    font-size: 16px;
+
+    box-shadow: 
+        inset 0 0 5px rgba(255,255,255,0.1),
+        0 4px 10px rgba(0,0,0,0.5);
+
+    transition: all 0.35s ease;
+}
+
+/* Hover efekti */
+.cat-btn:hover i {
+    transform: scale(1.2) rotate(8deg);
+    background: linear-gradient(135deg, var(--orange), #ff6a00);
+    box-shadow: 0 0 15px var(--orange);
+}
+
+/* Aktif kategori ikonu */
+.cat-btn.active i {
+    background: #fff;
+    color: var(--orange);
+    transform: scale(1.15);
+    box-shadow: 0 0 15px #fff;
+}
 #theme-toggle {
     position: relative;
     padding: 10px 20px;
@@ -20,7 +311,7 @@
     align-items: center;
     gap: 8px;
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    background: #f3a847; /* Gьndьz turuncusu */
+    background: #f3a847; /* Gündüz turuncusu */
     color: #111;
     box-shadow: 0 4px 15px rgba(243, 168, 71, 0.4);
     overflow: hidden;
@@ -33,7 +324,7 @@ body.night #theme-toggle {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(255,255,255,0.1);
 }
 
-/* Butonun Iзindeki Ikon Animasyonu */
+/* Butonun Içindeki Ikon Animasyonu */
 #theme-toggle i {
     font-size: 16px;
     transition: transform 0.6s rotate;
@@ -44,19 +335,19 @@ body.night #theme-toggle i {
     color: #f1c40f; /* Ay rengi */
 }
 
-/* Butonun Ьzerine Gelince Parlama */
+/* Butonun Üzerine Gelince Parlama */
 #theme-toggle:hover {
     transform: scale(1.1);
     letter-spacing: 2px;
 }
 
-/* Sayfa Geзis Efekti (Tьm siteyi kapsar) */
+/* Sayfa Geçis Efekti (Tüm siteyi kapsar) */
 body {
     transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
                 color 0.5s ease;
 }
 
-/* Arka planda uзusan kьзьk bir detay (Opsiyonel) */
+/* Arka planda uçusan küçük bir detay (Opsiyonel) */
 body.night::before {
     content: '';
     position: fixed;
@@ -99,7 +390,7 @@ body.night::before {
 }
 
 .btn:hover::before {
-    left: 100%; /* Mouse gelince iзinden isik geзer */
+    left: 100%; /* Mouse gelince içinden isik geçer */
 }
 
 /* 3. Favori Kalbi Ziplama Efekti */
@@ -121,18 +412,18 @@ body.night::before {
     100% { transform: scale(1.2); }
 }
 
-/* 4. Sayfa Yьklenirken Ьrьnlerin Sirayla Gelmesi */
+/* 4. Sayfa Yüklenirken Ürünlerin Sirayla Gelmesi */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* 5. Gece Modu Geзis Yumusakligi */
+/* 5. Gece Modu Geçis Yumusakligi */
 body {
     transition: background 0.5s ease, color 0.5s ease;
 }
 
-/* 6. Logo Gцkkusagi Akis Animasyonu */
+/* 6. Logo Gökkusagi Akis Animasyonu */
 .logo span {
     background: linear-gradient(90deg, #ff8c00, #ffee00, #ff8c00);
     background-size: 200%;
@@ -146,7 +437,7 @@ body {
     to { background-position: 200%; }
 }
 
-/* 7. Kategori Butonlari Alt Зizgi Efekti */
+/* 7. Kategori Butonlari Alt Çizgi Efekti */
 .cat-btn {
     position: relative;
     transition: 0.3s;
@@ -164,7 +455,7 @@ body {
 .cat-btn:hover::after {
     width: 80%;
 }::-webkit-scrollbar {
-    width: 12px; /* Зubugun genisligi */
+    width: 12px; /* Çubugun genisligi */
     background: var(--navy); /* Arka plan rengi */
 }
 
@@ -176,12 +467,12 @@ body {
     border: 3px solid var(--navy); /* Kenarlarda bosluk hissi yaratir */
     box-shadow: 0 0 10px var(--orange); /* Neon parlama efekti */
     transition: 0.5s;
-    animation: scrollGradient 3s ease infinite; /* Sьrekli renk akisi */
+    animation: scrollGradient 3s ease infinite; /* Sürekli renk akisi */
 }
 
-/* 3. Mouse Ьzerine Gelince (Hover) */
+/* 3. Mouse Üzerine Gelince (Hover) */
 ::-webkit-scrollbar-thumb:hover {
-    background: #fff; /* Ьstьne gelince beyaza parlar */
+    background: #fff; /* Üstüne gelince beyaza parlar */
     box-shadow: 0 0 20px #fff;
     border: 1px solid var(--orange);
 }
@@ -193,7 +484,7 @@ body {
     100% { background-position: 0% 0%; }
 }
 
-/* 5. Firefox Iзin (Alternatif Destek) */
+/* 5. Firefox Için (Alternatif Destek) */
 * {
     scrollbar-width: thin;
     scrollbar-color: var(--orange) var(--navy);
@@ -330,26 +621,30 @@ header {
 </a>
 
 <script>
-// Favorileri gцsteren ana fonksiyon
+function toggleMenu() {
+    document.querySelector(".category-nav").classList.toggle("open");
+    document.querySelector(".menu-toggle").classList.toggle("active");
+    document.body.classList.toggle("menu-open");
+}
 function showFavorites(event) {
-    if(event) event.preventDefault(); // Sayfa yukari siзramasin
+    if(event) event.preventDefault(); // Sayfa yukari siçramasin
     
     const favsNames = getFavorites(); // Kayitli isimleri al
-    const favProducts = products.filter(p => favsNames.includes(p.name)); // Ьrьn listesinden eslestir
+    const favProducts = products.filter(p => favsNames.includes(p.name)); // Ürün listesinden eslestir
     
-    // Kategorilerdeki 'active' sinifini temizle (зьnkь artik favori listesindeyiz)
+    // Kategorilerdeki 'active' sinifini temizle (çünkü artik favori listesindeyiz)
     document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
     
     if(favProducts.length === 0) {
         list.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:50px;">
-                            <h2 style="color:var(--orange)">Henьz favori ьrьnьn yok! ??</h2>
+                            <h2 style="color:var(--orange)">Henüz favori ürünün yok! ??</h2>
                           </div>`;
     } else {
         renderProducts(favProducts); // Sadece favorileri ekrana bas
     }
 }
 
-// Kalbe basinca hem listeyi gьncellesin hem sayiyi
+// Kalbe basinca hem listeyi güncellesin hem sayiyi
 function toggleFavorite(icon, name) {
     let favs = getFavorites();
     if(favs.includes(name)) {
@@ -364,7 +659,7 @@ function toggleFavorite(icon, name) {
     localStorage.setItem("amazon_favorites", JSON.stringify(favs));
     updateFavCount();
     
-    // EGER su an favoriler sayfasindaysak, silinen ьrьnь aninda ekrandan kaldir
+    // EGER su an favoriler sayfasindaysak, silinen ürünü aninda ekrandan kaldir
     const isActiveFavPage = !document.querySelector(".cat-btn.active");
     if(isActiveFavPage) {
         showFavorites(); 
@@ -444,7 +739,7 @@ const products = [
 
   /* ===== PERFUME ===== */
   {
-    name: "Fragonard Mйlodie Perfume 30ML",
+    name: "Fragonard Mélodie Perfume 30ML",
     price: 49.99,
     cat: "perfume",
     img: "https://m.media-amazon.com/images/I/61tM2dQXrWL._AC_SL1500_.jpg",
@@ -631,24 +926,24 @@ function toggleMenu() {
 }
 
 function filterProducts(cat, btn) {
-    // 1. Aktif buton gцrselligini gьncelle
+    // 1. Aktif buton görselligini güncelle
     document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
     
-    // 2. Ьrьnleri filtrele ve ekrana bas
+    // 2. Ürünleri filtrele ve ekrana bas
     const filtered = cat === 'all' ? products : products.filter(p => p.cat === cat);
     renderProducts(filtered);
     
-    // 3. MENЬYЬ KAPAT (Hata buradaydi, bu kisim tetiklenmiyordu)
+    // 3. MENÜYÜ KAPAT (Hata buradaydi, bu kisim tetiklenmiyordu)
     const nav = document.querySelector(".category-nav");
     const menuBtn = document.querySelector(".menu-toggle");
     
     if (nav.classList.contains("open")) {
-        nav.classList.remove("open"); // Yan menьyь gizle
-        menuBtn.classList.remove("active"); // Hamburger ikonunu normale dцndьr
+        nav.classList.remove("open"); // Yan menüyü gizle
+        menuBtn.classList.remove("active"); // Hamburger ikonunu normale döndür
     }
     
-    // Sayfayi en yukari kaydir (Kullanici yeni ьrьnleri en bastan gцrsьn)
+    // Sayfayi en yukari kaydir (Kullanici yeni ürünleri en bastan görsün)
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
