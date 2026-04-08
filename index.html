@@ -12,7 +12,6 @@
     --navy:#131921;
     --light-navy:#232f3e;
     --orange:#f3a847;
-
     --bg:#eaeded;
     --text:#111;
     --card-bg:#ffffff;
@@ -24,7 +23,6 @@ body.night{
     --navy:#0b111a;
     --light-navy:#1a2233;
     --orange:#ff9900;
-
     --bg:#0f1620;
     --text:#eeeeee;
     --card-bg:#1c2433;
@@ -116,16 +114,12 @@ body.night .cat-btn{
 .search-input{
     width: 100%;
     padding: 10px 14px 10px 38px;
-
     border-radius: 12px;
     border: 1px solid rgba(0,0,0,0.08);
-
     background: #fff;
     color: #111;
-
     font-size: 13px;
     font-weight: 500;
-
     transition: all 0.25s ease;
 }
 
@@ -154,7 +148,6 @@ body.night .cat-btn{
 .search-input:focus{
     outline: none;
     border-color: var(--orange);
-
     box-shadow: 0 0 0 3px rgba(243,168,71,0.25);
 }
 
@@ -186,15 +179,12 @@ body.night .search-input:focus{
     top:0;
     width:240px;
     height:100vh;
-
     backdrop-filter: blur(15px);
     background: rgba(20,25,35,0.9);
-
     padding:80px 20px;
     display:flex;
     flex-direction:column;
     gap:14px;
-
     transition:.4s ease;
     z-index:999;
 }
@@ -212,25 +202,20 @@ body.night .category-nav{
     display:flex;
     align-items:center;
     gap:12px;
-
     padding:12px 14px;
     border-radius:12px;
-
     cursor:pointer;
     color:#fff;
     font-weight:600;
     letter-spacing:0.5px;
-
     transition: all 0.3s ease;
 }
 
-/* hover efekti */
 .cat-btn:hover{
     background: rgba(255,255,255,0.08);
     transform: translateX(8px);
 }
 
-/* aktif kategori */
 .cat-btn.active{
     background: linear-gradient(135deg, var(--orange), #ff6a00);
     color:#111;
@@ -241,63 +226,24 @@ body.night .category-nav{
 .cat-btn i{
     min-width:35px;
     height:35px;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     border-radius:10px;
     font-size:15px;
-
     background: rgba(255,255,255,0.08);
-
     transition:0.3s;
 }
 
-/* hover icon animasyon */
 .cat-btn:hover i{
     transform: rotate(10deg) scale(1.1);
 }
 
-/* aktif icon */
 .cat-btn.active i{
     background:#fff;
     color:var(--orange);
 }
-.cat-btn i {
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
-    border-radius: 10px;
-    background: linear-gradient(135deg, #1f2937, #111827);
-    color: #fff;
-
-    font-size: 16px;
-
-    box-shadow: 
-        inset 0 0 5px rgba(255,255,255,0.1),
-        0 4px 10px rgba(0,0,0,0.5);
-
-    transition: all 0.35s ease;
-}
-
-/* Hover efekti */
-.cat-btn:hover i {
-    transform: scale(1.2) rotate(8deg);
-    background: linear-gradient(135deg, var(--orange), #ff6a00);
-    box-shadow: 0 0 15px var(--orange);
-}
-
-/* Aktif kategori ikonu */
-.cat-btn.active i {
-    background: #fff;
-    color: var(--orange);
-    transform: scale(1.15);
-    box-shadow: 0 0 15px #fff;
-}
 #theme-toggle {
     position: relative;
     padding: 10px 20px;
@@ -311,51 +257,24 @@ body.night .category-nav{
     align-items: center;
     gap: 8px;
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    background: #f3a847; /* Gündüz turuncusu */
+    background: #f3a847;
     color: #111;
     box-shadow: 0 4px 15px rgba(243, 168, 71, 0.4);
     overflow: hidden;
 }
 
-/* Gece Modunda Butonun Degisimi */
 body.night #theme-toggle {
-    background: #37475a; /* Gece mavisi */
+    background: #37475a;
     color: #fff;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(255,255,255,0.1);
 }
 
-/* Butonun Içindeki Ikon Animasyonu */
-#theme-toggle i {
-    font-size: 16px;
-    transition: transform 0.6s rotate;
-}
-
-body.night #theme-toggle i {
-    transform: rotate(360deg) scale(1.2);
-    color: #f1c40f; /* Ay rengi */
-}
-
-/* Butonun Üzerine Gelince Parlama */
-#theme-toggle:hover {
-    transform: scale(1.1);
-    letter-spacing: 2px;
-}
-
-/* Sayfa Geçis Efekti (Tüm siteyi kapsar) */
 body {
     transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
                 color 0.5s ease;
 }
 
-/* Arka planda uçusan küçük bir detay (Opsiyonel) */
-body.night::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle at 70% 20%, rgba(255,255,255,0.05) 0%, transparent 20%);
-    pointer-events: none;
-    z-index: -1;
-}.card {
+.card {
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
     animation: fadeIn 0.6s ease backwards;
@@ -363,20 +282,15 @@ body.night::before {
 
 .card:hover {
     transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 15px 30px rgba(243, 168, 71, 0.3); /* Turuncu hafif parlama */
+    box-shadow: 0 15px 30px rgba(243, 168, 71, 0.3);
     border: 1px solid var(--orange);
 }
 
-/* 2. Satin Al Butonu Parlama Animasyonu */
 .btn {
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
     z-index: 1;
-}
-
-.btn:active {
-    transform: scale(0.95);
 }
 
 .btn::before {
@@ -390,40 +304,14 @@ body.night::before {
 }
 
 .btn:hover::before {
-    left: 100%; /* Mouse gelince içinden isik geçer */
+    left: 100%;
 }
 
-/* 3. Favori Kalbi Ziplama Efekti */
-.wishlist-icon {
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.wishlist-icon:hover {
-    transform: scale(1.3);
-}
-
-.wishlist-icon.fa-solid {
-    animation: heartBeat 0.4s linear;
-}
-
-@keyframes heartBeat {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.5); }
-    100% { transform: scale(1.2); }
-}
-
-/* 4. Sayfa Yüklenirken Ürünlerin Sirayla Gelmesi */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* 5. Gece Modu Geçis Yumusakligi */
-body {
-    transition: background 0.5s ease, color 0.5s ease;
-}
-
-/* 6. Logo Gökkusagi Akis Animasyonu */
 .logo span {
     background: linear-gradient(90deg, #ff8c00, #ffee00, #ff8c00);
     background-size: 200%;
@@ -437,58 +325,26 @@ body {
     to { background-position: 200%; }
 }
 
-/* 7. Kategori Butonlari Alt Çizgi Efekti */
-.cat-btn {
-    position: relative;
-    transition: 0.3s;
+::-webkit-scrollbar {
+    width: 12px;
+    background: var(--navy);
 }
 
-.cat-btn::after {
-    content: '';
-    position: absolute;
-    bottom: 5px; left: 10%;
-    width: 0; height: 2px;
-    background: var(--orange);
-    transition: 0.3s;
-}
-
-.cat-btn:hover::after {
-    width: 80%;
-}::-webkit-scrollbar {
-    width: 12px; /* Çubugun genisligi */
-    background: var(--navy); /* Arka plan rengi */
-}
-
-/* 2. Kaydirici (Thumb) - Hareket Eden Kisim */
 ::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, var(--orange), #ff4500, var(--orange));
     background-size: 200% 200%;
     border-radius: 20px;
-    border: 3px solid var(--navy); /* Kenarlarda bosluk hissi yaratir */
-    box-shadow: 0 0 10px var(--orange); /* Neon parlama efekti */
-    transition: 0.5s;
-    animation: scrollGradient 3s ease infinite; /* Sürekli renk akisi */
+    border: 3px solid var(--navy);
+    box-shadow: 0 0 10px var(--orange);
+    animation: scrollGradient 3s ease infinite;
 }
 
-/* 3. Mouse Üzerine Gelince (Hover) */
-::-webkit-scrollbar-thumb:hover {
-    background: #fff; /* Üstüne gelince beyaza parlar */
-    box-shadow: 0 0 20px #fff;
-    border: 1px solid var(--orange);
-}
-
-/* 4. Renk Akis Animasyonu */
 @keyframes scrollGradient {
     0% { background-position: 0% 0%; }
     50% { background-position: 0% 100%; }
     100% { background-position: 0% 0%; }
 }
 
-/* 5. Firefox Için (Alternatif Destek) */
-* {
-    scrollbar-width: thin;
-    scrollbar-color: var(--orange) var(--navy);
-}
 :root{
     --navy:#131921; --light-navy:#232f3e; --orange:#f3a847;
     --bg:#eaeded; --text:#111; --card-bg:#fff; --btn-bg:#ffa41c;
@@ -500,7 +356,6 @@ body.night{
 *{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,Arial}
 body{background:var(--bg);color:var(--text);transition:0.4s; overflow-x:hidden;}
 
-/* --- HEADER --- */
 header {
     background: var(--navy);
     padding: 10px 15px;
@@ -509,11 +364,10 @@ header {
     z-index: 1000;
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Elemanlari yayar */
+    justify-content: space-between;
     gap: 10px;
 }
 
-/* --- ANIMASYONLU MENU --- */
 .menu-toggle {
     display: flex;
     flex-direction: column;
@@ -547,12 +401,6 @@ header {
 }
 .search-icon { position: absolute; left: 10px; color: #888; }
 
-#theme-toggle { 
-    background: var(--orange); border: none; padding: 6px 12px; 
-    border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 11px;
-}
-
-/* --- GRID & CARDS --- */
 .container{ padding: 10px; margin-top: 10px; }
 .grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; }
 @media (min-width: 768px) {
@@ -568,7 +416,6 @@ header {
 
 .wishlist-icon { position: absolute; top: 10px; right: 10px; font-size: 18px; color: #888; cursor: pointer; }
 
-/* --- NAV --- */
 .category-nav{
     position:fixed; left:-260px; top:0; width:240px; height:100vh;
     background:var(--light-navy); padding:80px 20px; display:flex;
@@ -596,7 +443,7 @@ header {
     
     <div class="search-container">
         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-        <input type="text" placeholder="Search..." class="search-input">
+        <input type="text" placeholder="Search..." class="search-input" oninput="searchProducts()">
     </div>
 
     <a class="logo" href="#">amazon<span>.picks</span></a>
@@ -609,6 +456,7 @@ header {
     <div class="cat-btn" onclick="filterProducts('gaming',this)">Gaming</div>
     <div class="cat-btn" onclick="filterProducts('perfume',this)">Perfume</div>
     <div class="cat-btn" onclick="filterProducts('smartwatch',this)">Smart Watch</div>
+    <div class="cat-btn" onclick="filterProducts('accessories',this)">Accessories</div>
 </div>
 
 <div class="container">
@@ -621,50 +469,6 @@ header {
 </a>
 
 <script>
-function toggleMenu() {
-    document.querySelector(".category-nav").classList.toggle("open");
-    document.querySelector(".menu-toggle").classList.toggle("active");
-    document.body.classList.toggle("menu-open");
-}
-function showFavorites(event) {
-    if(event) event.preventDefault(); // Sayfa yukari siçramasin
-    
-    const favsNames = getFavorites(); // Kayitli isimleri al
-    const favProducts = products.filter(p => favsNames.includes(p.name)); // Ürün listesinden eslestir
-    
-    // Kategorilerdeki 'active' sinifini temizle (çünkü artik favori listesindeyiz)
-    document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
-    
-    if(favProducts.length === 0) {
-        list.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:50px;">
-                            <h2 style="color:var(--orange)">Henüz favori ürünün yok! ??</h2>
-                          </div>`;
-    } else {
-        renderProducts(favProducts); // Sadece favorileri ekrana bas
-    }
-}
-
-// Kalbe basinca hem listeyi güncellesin hem sayiyi
-function toggleFavorite(icon, name) {
-    let favs = getFavorites();
-    if(favs.includes(name)) {
-        favs = favs.filter(n => n !== name);
-        icon.classList.replace("fa-solid", "fa-regular");
-        icon.style.color = "#888";
-    } else {
-        favs.push(name);
-        icon.classList.replace("fa-regular", "fa-solid");
-        icon.style.color = "#ff4500";
-    }
-    localStorage.setItem("amazon_favorites", JSON.stringify(favs));
-    updateFavCount();
-    
-    // EGER su an favoriler sayfasindaysak, silinen ürünü aninda ekrandan kaldir
-    const isActiveFavPage = !document.querySelector(".cat-btn.active");
-    if(isActiveFavPage) {
-        showFavorites(); 
-    }
-}
 const products = [
   {
     name: "Logitech G PRO X SUPERLIGHT 2 SE",
@@ -880,7 +684,6 @@ const products = [
   }
 ];
 
-
 const list = document.getElementById("list");
 
 function getFavorites() { return JSON.parse(localStorage.getItem("amazon_favorites")) || []; }
@@ -900,10 +703,19 @@ function toggleFavorite(icon, name) {
     }
     localStorage.setItem("amazon_favorites", JSON.stringify(favs));
     updateFavCount();
+    
+    const isActiveFavPage = !document.querySelector(".cat-btn.active");
+    if(isActiveFavPage) showFavorites(); 
 }
 
 function renderProducts(arr) {
     list.innerHTML = "";
+    if(arr.length === 0) {
+        list.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:50px;">
+                            <h2 style="color:var(--orange)">Sonuç bulunamadi... ??</h2>
+                          </div>`;
+        return;
+    }
     const favs = getFavorites();
     arr.forEach(p => {
         const isFav = favs.includes(p.name);
@@ -920,30 +732,49 @@ function renderProducts(arr) {
     });
 }
 
+// DÜZELTME: Arama fonksiyonu iyilestirildi
+function searchProducts() {
+    const term = document.querySelector(".search-input").value.toLowerCase();
+    const filtered = products.filter(p => 
+        p.name.toLowerCase().includes(term) || 
+        p.cat.toLowerCase().includes(term)
+    );
+    renderProducts(filtered);
+    document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+}
+
+function showFavorites(event) {
+    if(event) event.preventDefault();
+    const favsNames = getFavorites();
+    const favProducts = products.filter(p => favsNames.includes(p.name));
+    document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+    
+    if(favProducts.length === 0) {
+        list.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:50px;">
+                            <h2 style="color:var(--orange)">Henüz favori ürünün yok! ??</h2>
+                          </div>`;
+    } else {
+        renderProducts(favProducts);
+    }
+}
+
 function toggleMenu() {
     document.querySelector(".category-nav").classList.toggle("open");
     document.querySelector(".menu-toggle").classList.toggle("active");
 }
 
 function filterProducts(cat, btn) {
-    // 1. Aktif buton görselligini güncelle
     document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
-    
-    // 2. Ürünleri filtrele ve ekrana bas
     const filtered = cat === 'all' ? products : products.filter(p => p.cat === cat);
     renderProducts(filtered);
     
-    // 3. MENÜYÜ KAPAT (Hata buradaydi, bu kisim tetiklenmiyordu)
     const nav = document.querySelector(".category-nav");
     const menuBtn = document.querySelector(".menu-toggle");
-    
     if (nav.classList.contains("open")) {
-        nav.classList.remove("open"); // Yan menüyü gizle
-        menuBtn.classList.remove("active"); // Hamburger ikonunu normale döndür
+        nav.classList.remove("open");
+        menuBtn.classList.remove("active");
     }
-    
-    // Sayfayi en yukari kaydir (Kullanici yeni ürünleri en bastan görsün)
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -955,7 +786,11 @@ themeBtn.onclick = () => {
     localStorage.setItem("theme", isNight ? "night" : "day");
 };
 
-// Start
+// Baslangiç Ayarlari
+if(localStorage.getItem("theme") === "night") {
+    document.body.classList.add("night");
+    themeBtn.innerText = "DAY";
+}
 renderProducts(products);
 updateFavCount();
 </script>
