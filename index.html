@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Amazon | Products</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+    --bg-main: #060913;
+    --bg-card: rgba(15, 23, 42, 0.6);
+    --bg-header: rgba(6, 9, 19, 0.85);
+    --text-main: #f8fafc;
+    --text-muted: #64748b;
+    --accent: #6366f1;
+    --accent-glow: rgba(99, 102, 241, 0.3);
+    --accent-hover: #4f46e5;
+    --amazon-gold: #fbbf24;
+    --border-color: rgba(255, 255, 255, 0.06);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+body { background-color: var(--bg-main); color: var(--text-main); min-height: 100vh; overflow-x: hidden; padding-bottom: 100px; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-main); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* HEADER & NAV */
+header { 
+    background: var(--bg-header); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    padding: 18px 40px; position: sticky; top: 0; z-index: 1000; 
+    display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color);
+}
+.logo { font-size: 22px; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -0.5px; }
+.logo span { color: var(--amazon-gold); font-weight: 400; }
+
+.header-actions { display: flex; align-items: center; gap: 16px; }
+.search-wrapper { position: relative; }
+.search-trigger-btn, .action-btn {
+    background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); color: var(--text-main);
+    width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); font-size: 16px;
+}
+.search-trigger-btn:hover, .action-btn:hover { background: var(--accent); border-color: transparent; box-shadow: 0 0 20px var(--accent-glow); }
+
+.search-dropdown {
+    position: absolute; top: 70px; right: 40px; background: rgba(15, 23, 42, 0.98); border: 1px solid var(--border-color);
+    padding: 12px; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); width: 300px;
+    opacity: 0; transform: translateY(-10px) scale(0.95); pointer-events: none; transition: var(--transition); z-index: 1001;
+}
+.search-dropdown.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+.search-input { width: 100%; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border-color); background: rgba(0, 0, 0, 0.4); color: #fff; outline: none; }
+
+.top-nav-container { background: rgba(10, 15, 30, 0.4); border-bottom: 1px solid var(--border-color); padding: 12px 40px; display: flex; justify-content: center; overflow-x: auto; white-space: nowrap; gap: 10px; }
+.top-nav-container::-webkit-scrollbar { display: none; }
+.cat-chip { padding: 10px 20px; border-radius: 30px; font-size: 13px; font-weight: 500; color: var(--text-muted); cursor: pointer; transition: var(--transition); border: 1px solid transparent; display: flex; align-items: center; gap: 8px; }
+.cat-chip:hover { color: #fff; background: rgba(255, 255, 255, 0.03); }
+.cat-chip.active { background: rgba(99, 102, 241, 0.15); color: var(--accent); border-color: rgba(99, 102, 241, 0.3); font-weight: 600; }
+
+/* MAIN CONTAINER & GRID */
+.container { padding: 40px; max-width: 1400px; margin: 0 auto; }
+.widget-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 40px; }
+
+/* PROMO HERO BANNER */
+.promo-hero {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9)); 
+    border: 1px solid var(--border-color); 
+    border-radius: var(--radius-lg); 
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    position: relative;
+    overflow: hidden;
+}
+.promo-badge {
+    position: absolute; top: -15px; right: -30px; background: #ef4444; color: white; font-weight: 800; font-size: 12px; padding: 30px 40px 8px 40px; transform: rotate(45deg); box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4); text-align: center; z-index: 2;
+}
+.promo-img-box {
+    background: #fff; border-radius: 16px; width: 140px; height: 140px; display: flex; align-items: center; justify-content: center; padding: 12px; flex-shrink: 0; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+.promo-content { flex: 1; z-index: 1; }
+
+/* AI GIFT WIDGET */
+.gift-widget-card { background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(6, 9, 19, 0.8) 100%); border: 1px solid rgba(99, 102, 241, 0.4); border-radius: var(--radius-lg); padding: 32px 24px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; overflow: hidden; }
+.gift-btn { background: linear-gradient(90deg, #f59e0b, #d97706); color: white; font-weight: 700; border: none; padding: 14px 28px; border-radius: 12px; cursor: pointer; margin-top: 20px; transition: var(--transition); box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3); width: 100%; font-size: 15px; }
+.gift-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(245, 158, 11, 0.5); }
+
+/* PRODUCT GRID */
+.view-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.filter-box { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--text-muted); background: rgba(255,255,255,0.03); padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border-color); }
+.filter-box input[type="range"] { accent-color: var(--accent); width: 120px; cursor: pointer; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+
+/* CARD STYLES */
+.card { background: var(--bg-card); border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; position: relative; border: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transition: var(--transition); backdrop-filter: blur(10px); }
+.card:hover { transform: translateY(-6px); border-color: rgba(99, 102, 241, 0.4); box-shadow: 0 20px 30px -5px rgba(99, 102, 241, 0.15); }
+.card-top-actions { position: absolute; top: 16px; right: 16px; display: flex; flex-direction: column; gap: 10px; z-index: 3; }
+.card-icon-btn { background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); color: var(--text-muted); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); font-size: 14px; }
+.card-icon-btn:hover { color: #fff; border-color: var(--text-muted); }
+.card-icon-btn.wish-btn.active { color: #ef4444 !important; }
+.img-box { height: 180px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; padding: 16px; background: #fff; border-radius: 12px; cursor: pointer; position: relative; overflow: hidden; }
+.img-box img { max-width: 100%; max-height: 100%; object-fit: contain; transition: var(--transition); }
+.card:hover .img-box img { transform: scale(1.05); }
+.specs-overlay { position: absolute; bottom: -100%; left: 0; width: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(5px); padding: 12px; transition: var(--transition); display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--border-color); }
+.card:hover .specs-overlay { bottom: 0; }
+.spec-item { font-size: 11px; color: #cbd5e1; display: flex; align-items: center; gap: 6px; }
+.spec-item i { color: var(--accent); width: 14px; }
+.title { font-weight: 600; font-size: 15px; line-height: 1.5; margin-bottom: 12px; cursor: pointer; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 44px; transition: var(--transition); }
+.title:hover { color: var(--accent); }
+.card-meta { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border-color); }
+.rating { color: var(--amazon-gold); font-size: 13px; font-weight: 600; }
+.price { font-size: 19px; font-weight: 700; }
+.card-actions { display: flex; gap: 8px; width: 100%; margin-top: 14px; }
+.btn { flex-grow: 1; background: rgba(255,255,255,0.03); color: var(--text-main); padding: 11px; border-radius: 10px; text-align: center; text-decoration: none; font-weight: 600; font-size: 13px; border: 1px solid var(--border-color); transition: var(--transition); display:inline-block; cursor: pointer;}
+.card:hover .btn { background: var(--accent); border-color: transparent; }
+.btn:hover { background: var(--accent-hover) !important; }
+
+/* BEST SELLER FEATURE HIGHLIGHT */
+.card.best-seller { grid-column: 1 / -1; flex-direction: row; align-items: center; background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(15, 23, 42, 0.8)); border-color: rgba(245, 158, 11, 0.5); padding: 30px; }
+.card.best-seller:hover { box-shadow: 0 20px 40px -5px rgba(245, 158, 11, 0.2); }
+.card.best-seller .img-box { height: 250px; flex: 1; margin-bottom: 0; margin-right: 30px; }
+.card.best-seller .card-info-wrap { flex: 2; display: flex; flex-direction: column; justify-content: center; }
+.card.best-seller .title { font-size: 24px; height: auto; -webkit-line-clamp: 3; margin-bottom: 16px; }
+.card.best-seller .price { font-size: 28px; color: var(--amazon-gold); }
+.best-seller-badge { position: absolute; top: 20px; left: 20px; background: #ef4444; color: #fff; padding: 8px 16px; border-radius: 8px; font-weight: 800; font-size: 14px; z-index: 10; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4); display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 1px; }
+
+/* FLOATING FAVORITE BUTTON */
+.floating-fav-btn { position: fixed; bottom: 32px; right: 32px; background: var(--accent); color: #fff; width: 56px; height: 56px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 18px; box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4); z-index: 1002; text-decoration: none; transition: var(--transition); cursor: pointer;}
+.floating-fav-btn:hover { transform: scale(1.08) translateY(-2px); }
+.fav-count { position: absolute; top: -2px; right: -2px; background: #ef4444; color: #fff; font-size: 10px; font-weight: 700; width: 22px; height: 22px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid var(--bg-main); }
+
+/* TOAST & MODAL */
+.toast { position: fixed; bottom: -80px; left: 50%; transform: translateX(-50%); background: #131a2a; color: #fff; padding: 14px 28px; border-radius: 12px; font-size: 14px; font-weight: 500; box-shadow: var(--shadow-lg); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 6000; border: 1px solid var(--border-color); display: flex; align-items: center; gap: 10px;}
+.toast.show { bottom: 32px; }
+.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(6, 9, 19, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; z-index: 5500; opacity: 0; visibility: hidden; transition: var(--transition); padding: 20px; }
+.modal.active { opacity: 1; visibility: visible; }
+.modal-content { background: #0f172a; width: 100%; max-width: 500px; border-radius: var(--radius-md); padding: 32px; position: relative; border: 1px solid var(--border-color); box-shadow: var(--shadow-lg); max-height: 90vh; overflow-y: auto;}
+.modal-close { position: absolute; top: 16px; right: 18px; font-size: 24px; cursor: pointer; color: var(--text-muted); background: none; border: none; transition: var(--transition);}
+.modal-close:hover { color: #fff; }
+
+/* QUIZ WIZARD */
+.quiz-step { display: none; }
+.quiz-step.active { display: block; }
+.quiz-options { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.quiz-opt { background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 16px; border-radius: 10px; color: #fff; text-align: left; cursor: pointer; font-weight: 500; transition: var(--transition); font-size: 15px;}
+.quiz-opt:hover { border-color: var(--accent); background: rgba(99, 102, 241, 0.1); padding-left: 20px; }
+
+/* URGENCY POPUP */
+.urgency-popup { position: fixed; bottom: 32px; left: -400px; background: rgba(15, 23, 42, 0.95); border: 1px solid var(--border-color); padding: 14px 20px; border-radius: var(--radius-md); display: flex; align-items: center; gap: 14px; z-index: 5000; transition: all 0.5s; cursor: pointer; }
+.urgency-popup.show { left: 32px; }
+.urgency-img { width: 48px; height: 48px; background: #fff; padding: 4px; border-radius: 8px; object-fit: contain; }
+.urgency-info { flex: 1; }
+.urgency-text { font-size: 13px; color: #cbd5e1; }
+.urgency-text strong { color: #fff; }
+
+@media (max-width: 992px) { .widget-grid { grid-template-columns: 1fr; } }
+@media (max-width: 768px) {
+    .card.best-seller { flex-direction: column; padding: 20px; }
+    .card.best-seller .img-box { height: 250px; width: 100%; margin-right: 0; margin-bottom: 20px; }
+    .promo-hero { flex-direction: column; text-align: center; }
+}
+@media (max-width: 600px) { header { padding: 16px 20px; } .top-nav-container { padding: 12px 20px; justify-content: flex-start; } .container { padding: 20px; } .view-header { flex-direction: column; gap: 16px; align-items: flex-start; } .search-dropdown { right: 20px; left: 20px; width: auto; } }
+</style>
+</head>
+<body>
+
+<header>
+    <a class="logo" href="#" onclick="resetAll(); return false;">amz<span>products.</span></a>
+    <div class="header-actions">
+        <button class="search-trigger-btn" id="search-trigger" onclick="toggleSearch(event)"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+</header>
+<div class="search-dropdown" id="search-dropdown" onclick="event.stopPropagation()">
+    <input type="text" id="search-input" placeholder="Search curated list..." class="search-input" oninput="applyFilters()">
+</div>
+
+<div class="top-nav-container">
+    <div class="cat-chip active" onclick="setCategory('all',this)"><i class="fa-solid fa-layer-group"></i> All</div>
+    <div class="cat-chip" onclick="setCategory('gaming',this)"><i class="fa-solid fa-gamepad"></i> Gaming</div>
+    <div class="cat-chip" onclick="setCategory('perfume',this)"><i class="fa-solid fa-bottle-droplet"></i> Perfume</div>
+    <div class="cat-chip" onclick="setCategory('smartwatch',this)"><i class="fa-solid fa-stopwatch"></i> Smartwatch</div>
+    <div class="cat-chip" onclick="setCategory('accessories',this)"><i class="fa-solid fa-bezier-curve"></i> Accessories</div>
+</div>
+
+<div class="container">
+    <!-- WIDGET SECTION -->
+    <div class="widget-grid">
+        
+        <!-- PROMO HERO BANNER -->
+        <div class="promo-hero">
+            <div class="promo-badge">20%<br>OFF</div>
+            <div class="promo-img-box">
+                <img src="https://m.media-amazon.com/images/I/61vJtKatMKL._AC_SL1500_.jpg" alt="Sony Headphones">
+            </div>
+            <div class="promo-content">
+                <div style="font-size: 13px; color: #ef4444; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;"><i class="fa-solid fa-fire"></i> Limited Time Deal</div>
+                <div style="font-size: 22px; font-weight: 800; color: #fff; line-height: 1.3; margin-bottom: 12px;">Sony WH-1000XM5 Wireless Noise Canceling Headphones</div>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                    <span style="font-size: 24px; font-weight: 800; color: var(--amazon-gold);">$318.00</span>
+                    <span style="font-size: 16px; text-decoration: line-through; color: var(--text-muted);">$398.00</span>
+                </div>
+                <a href="https://www.amazon.com/dp/B09XS7JWHH" target="_blank" class="btn" style="background: #ef4444; color: #fff; border: none; padding: 12px 24px; font-size: 14px;">Claim Deal Now</a>
+            </div>
+        </div>
+
+        <!-- AI GIFT FINDER -->
+        <div class="gift-widget-card">
+            <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 12px;"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--amazon-gold);"></i> AI Gift Finder</h3>
+            <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5;">Stuck on ideas? Let our virtual companion pick the perfect gear matching your budget and needs.</p>
+            <button class="gift-btn" onclick="openGiftModal()"><i class="fa-solid fa-gift"></i> Launch Gift Quiz</button>
+        </div>
+    </div>
+
+    <!-- PRODUCT GRID -->
+    <div class="view-header">
+        <h2 style="font-size: 22px; font-weight: 700;" id="grid-title">All Curated Collections</h2>
+        <div class="filter-box">
+            <span>Max Price: $<span id="price-val">400</span></span>
+            <input type="range" id="price-range" min="0" max="400" value="400" oninput="document.getElementById('price-val').innerText=this.value; applyFilters();">
+        </div>
+    </div>
+
+    <div class="grid" id="list"></div>
+</div>
+
+<!-- REAL-TIME URGENCY POPUP -->
+<div class="urgency-popup" id="urgency-popup">
+    <img src="" id="urg-img" class="urgency-img" alt="">
+    <div class="urgency-info">
+        <div class="urgency-text" id="urg-text"></div>
+        <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;"><i class="fa-solid fa-bolt" style="color:var(--amazon-gold)"></i> Verified Order</div>
+    </div>
+</div>
+
+<!-- FLOATING FAVORITE BUTTON -->
+<a class="floating-fav-btn" onclick="showFavorites(event)">
+    <i class="fa-solid fa-heart"></i>
+    <span class="fav-count" id="fav-count">0</span>
+</a>
+
+<div class="toast" id="toast"></div>
+
+<!-- GENERAL MODAL -->
+<div class="modal" id="quick-modal" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <div id="modal-inner-data">
+            <h2 style="margin-bottom: 16px; font-size: 20px;"><i class="fa-solid fa-heart" style="color:#ef4444;"></i> Your Favorites</h2>
+            <div id="fav-list-container" style="display: flex; flex-direction: column; gap: 12px;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- AI GIFT FINDER MODAL -->
+<div class="modal" id="gift-modal" onclick="closeGiftModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()" style="max-width: 420px;">
+        <button class="modal-close" onclick="closeGiftModal()">&times;</button>
+        
+        <div class="quiz-step active" id="g-step-1">
+            <h3 style="font-size:20px; font-weight:700;"><i class="fa-solid fa-user-tag" style="color:var(--accent)"></i> Who is this gift for?</h3>
+            <div class="quiz-options">
+                <button class="quiz-opt" onclick="nextQuizStep('gaming')">?? Hardcore Gamer / Streamer</button>
+                <button class="quiz-opt" onclick="nextQuizStep('accessories')">?? Everyday Tech Lover</button>
+                <button class="quiz-opt" onclick="nextQuizStep('perfume')">? Fragrance Enthusiast</button>
+            </div>
+        </div>
+
+        <div class="quiz-step" id="g-step-2">
+            <h3 style="font-size:20px; font-weight:700;"><i class="fa-solid fa-wallet" style="color:var(--amazon-gold)"></i> Select your budget</h3>
+            <div class="quiz-options">
+                <button class="quiz-opt" onclick="finishQuiz('low')">?? Budget Friendly (Under $50)</button>
+                <button class="quiz-opt" onclick="finishQuiz('high')">?? Premium Selection ($50+)</button>
+            </div>
+        </div>
+
+        <div class="quiz-step" id="g-step-3">
+            <h3 style="font-size:20px; font-weight:800; margin-bottom:16px; color:var(--amazon-gold)">? Smart Recommendations</h3>
+            <div id="quiz-results-container" style="display:flex; flex-direction:column; gap:16px;"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+// "Tactical" category and builder properties removed from data.
+const products = [
+  { name: "Barnett Whitetail Hunter STR Crossbow Package", price: 349.99, cat: "tactical", img: "https://m.media-amazon.com/images/I/71u-p-6fK3L._AC_SL1500_.jpg", link: "https://www.amazon.com/dp/B07H998C4H", specs: ["375 FPS Velocity", "Step-Through Riser", "TriggerTech Release"], tags: { interest: "tactical", tier: "high" }, slotType: "tactical", bestSeller: true },
+  { name: "Logitech G PRO X SUPERLIGHT 2 SE", price: 159.99, cat: "gaming", img: "https://m.media-amazon.com/images/I/61UxfXTUyvL._AC_SL1500_.jpg", link: "https://amzn.to/3OxuY4w", specs: ["LIGHTSPEED Wireless", "60g Ultra-Lightweight", "HERO 2 Sensor"], tags: { interest: "gaming", tier: "high" }, slotType: "mouse" },
+  { name: "Logitech G305 LIGHTSPEED Wireless", price: 59.99, cat: "gaming", img: "https://m.media-amazon.com/images/I/61LtuGzXeaL._AC_SL1500_.jpg", link: "https://amzn.to/4tR718i", specs: ["12,000 DPI Max", "250h Battery Run", "Compact Build"], tags: { interest: "gaming", tier: "high" }, slotType: "mouse" },
+  { name: "Logitech G735 Lightspeed RGB Headset", price: 229.00, cat: "gaming", img: "https://m.media-amazon.com/images/I/61S-tVInYGL._AC_SL1500_.jpg", link: "https://amzn.to/4qWDkAd", specs: ["Cloud-Soft Comfort", "Dual Audio Mixing", "LIGHTSYNC RGB"], tags: { interest: "gaming", tier: "high" }, slotType: "headset" },
+  { name: "Razer BlackShark V2 X Gaming Headset", price: 49.99, cat: "gaming", img: "https://m.media-amazon.com/images/I/61CGHv6kmWL._AC_SL1500_.jpg", link: "https://amzn.to/46RrIao", specs: ["50mm Triforce Drivers", "7.1 Surround Sound", "HyperClear Cardioid"], tags: { interest: "gaming", tier: "low" }, slotType: "headset" },
+  { name: "Retro Handheld Game Console X9", price: 35.99, cat: "gaming", img: "https://m.media-amazon.com/images/I/71Y82A9qOBL._AC_SL1500_.jpg", link: "https://amzn.to/4kQk321", specs: ["Retro Games", "HD Display", "Portable Design"], tags: { interest: "gaming", tier: "low" }, slotType: "none" },
+  { name: "RGB Gaming Mouse Pad - Galaxy", price: 19.99, cat: "gaming", img: "https://m.media-amazon.com/images/I/81I-uYl3I4L._AC_SL1500_.jpg", link: "https://amzn.to/4aU72A2", specs: ["Large Size", "RGB Borders", "Non-slip Rubber Base"], tags: { interest: "gaming", tier: "low" }, slotType: "none" },
+  { name: "Enstixsm Luna Game Controller", price: 42.99, cat: "gaming", img: "https://m.media-amazon.com/images/I/61m1E6l6X0L._AC_SL1500_.jpg", link: "https://amzn.to/4u816fB", specs: ["Wireless Bluetooth", "Ergonomic Grip", "Vibration Support"], tags: { interest: "gaming", tier: "low" }, slotType: "none" },
+  { name: "Razer Orochi V2 Mobile Mouse", price: 49.99, cat: "gaming", img: "https://m.media-amazon.com/images/I/61Q5w1zqk-L._AC_SL1500_.jpg", link: "https://amzn.to/4aAru9S", specs: ["Compact Size", "18K DPI Sensor", "Long Battery Life"], tags: { interest: "gaming", tier: "low" }, slotType: "mouse" },
+  { name: "Frigidaire Gaming Mini Refrigerator", price: 45.00, cat: "gaming", img: "https://m.media-amazon.com/images/I/81k70YnU4+L._AC_SL1500_.jpg", link: "https://amzn.to/4bEVhiJ", specs: ["Retro Look", "Compact 4L", "Quiet Operation"], tags: { interest: "gaming", tier: "low" }, slotType: "none" },
+  { name: "Handmade Crochet Game Controller", price: 15.99, cat: "gaming", img: "https://m.media-amazon.com/images/I/71Lq2n53TGL._AC_SL1500_.jpg", link: "https://amzn.to/4kETgWt", specs: ["Handcrafted", "Soft Yarn", "Perfect Gift"], tags: { interest: "gaming", tier: "low" }, slotType: "none" },
+  { name: "Fragonard Mйlodie Perfume 30ML", price: 49.99, cat: "perfume", img: "https://m.media-amazon.com/images/I/61tM2dQXrWL._AC_SL1500_.jpg", link: "https://amzn.to/4kRlgGm", specs: ["Made in France", "Floral Scent Profile", "Exquisite Glass Bottle"], tags: { interest: "accessories", tier: "low" }, slotType: "none" },
+  { name: "Pheromone Cologne for Men - Citrus", price: 24.99, cat: "perfume", img: "https://m.media-amazon.com/images/I/61pW77I4VFL._AC_SL1500_.jpg", link: "https://amzn.to/4b4X3sE", specs: ["Citrus Blend", "Long Lasting", "Pheromone Infused"], tags: { interest: "accessories", tier: "low" }, slotType: "none" },
+  { name: "GUESS Seductive Blue Gift Set", price: 35.00, cat: "perfume", img: "https://m.media-amazon.com/images/I/71kLQe2j2EL._AC_SL1500_.jpg", link: "https://amzn.to/4b4TL8I", specs: ["Fresh Aquatic Scent", "Includes Body Wash", "Gift Box Ready"], tags: { interest: "accessories", tier: "low" }, slotType: "none" },
+  { name: "Al-Rehab Choco Musk Rollerball", price: 9.99, cat: "perfume", img: "https://m.media-amazon.com/images/I/61lL7VJ6ZJL._AC_SL1500_.jpg", link: "https://amzn.to/4rynxsx", specs: ["Sweet Vanilla", "Musk Undertones", "Travel Friendly"], tags: { interest: "accessories", tier: "low" }, slotType: "none" },
+  { name: "Jayne's Mix Perfume Sampler Set", price: 18.99, cat: "perfume", img: "https://m.media-amazon.com/images/I/61Kq-H6vYOL._AC_SL1500_.jpg", link: "https://amzn.to/3OXog7W", specs: ["Variety Pack", "Mini Bottles", "Great for Testing"], tags: { interest: "accessories", tier: "low" }, slotType: "none" },
+  { name: "DefineMe Natural Perfume 7-Set", price: 28.00, cat: "perfume", img: "https://m.media-amazon.com/images/I/71-0Yp6Y98L._AC_SL1500_.jpg", link: "https://amzn.to/4aGIx9a", specs: ["Natural Oils", "Cruelty Free", "7 Unique Scents"], tags: { interest: "accessories", tier: "low" }, slotType: "none" },
+  { name: "Marvel Iron Man EDT 3.4oz", price: 15.50, cat: "perfume", img: "https://m.media-amazon.com/images/I/71jA65qXpGL._AC_SL1500_.jpg", link: "https://amzn.to/4qPwJY6", specs: ["Woody Notes", "Collectible Bottle", "Everyday Wear"], tags: { interest: "accessories", tier: "low" }, slotType: "none" },
+  { name: "Samsung Galaxy Watch 7 (40mm)", price: 299.99, cat: "smartwatch", img: "https://m.media-amazon.com/images/I/61V2cZz6yWL._AC_SL1500_.jpg", link: "https://www.amazon.com/dp/B0D1YQKDML", specs: ["AI Health Insights", "BioActive Sensor", "Energy Score Tracker"], tags: { interest: "accessories", tier: "high" }, slotType: "tactical" },
+  { name: "Fitbit Versa 4 Smartwatch", price: 199.95, cat: "smartwatch", img: "https://m.media-amazon.com/images/I/61K8nB3DqOL._AC_SL1500_.jpg", link: "https://www.amazon.com/dp/B0B4MWCFV4", specs: ["Built-in GPS", "Active Zone Minutes", "6+ Day Battery"], tags: { interest: "accessories", tier: "high" }, slotType: "tactical" },
+  { name: "Smart Watch - Fitness & Calls", price: 49.99, cat: "smartwatch", img: "https://m.media-amazon.com/images/I/71X8F8P9ZzL._AC_SL1500_.jpg", link: "https://www.amazon.com/dp/B0FSY8FT8C", specs: ["Heart Rate Monitor", "Bluetooth Call", "IP68 Waterproof"], tags: { interest: "accessories", tier: "low" }, slotType: "tactical" },
+  { name: "Inspiratek Smartwatch Men/Women", price: 39.99, cat: "smartwatch", img: "https://m.media-amazon.com/images/I/61-A795R1AL._AC_SL1500_.jpg", link: "https://www.amazon.com/dp/B0B9JX7VM4", specs: ["Custom Dials", "Sleep Tracker", "Sport Modes"], tags: { interest: "accessories", tier: "low" }, slotType: "tactical" },
+  { name: "Smartwatch Answer/Make Calls", price: 45.99, cat: "smartwatch", img: "https://m.media-amazon.com/images/I/71ZpS-3O7BL._AC_SL1500_.jpg", link: "https://www.amazon.com/dp/B0DSZRN3YF", specs: ["1.8\" Display", "Message Push", "Voice Assistant"], tags: { interest: "accessories", tier: "low" }, slotType: "tactical" },
+  { name: "Mens Walking Shoes Slip On Tennis", price: 39.99, cat: "accessories", img: "https://m.media-amazon.com/images/I/718fXm5hW9L._AC_UY1000_.jpg", link: "https://www.amazon.com/dp/B0F18QZZJD", specs: ["Breathable Mesh", "Lightweight", "Comfort Insole"], tags: { interest: "accessories", tier: "low" }, slotType: "none" },
+  { name: "Everlasting Comfort Cloud Foot Rest", price: 34.95, cat: "accessories", img: "https://m.media-amazon.com/images/I/71YyP6K-4NL._AC_SL1500_.jpg", link: "https://amzn.to/4bFDGqX", specs: ["Memory Foam", "Ergonomic Design", "Machine Washable Cover"], tags: { interest: "accessories", tier: "low" }, slotType: "none" },
+  { name: "VIENON 4-Port USB 3.0 Hub Splitter", price: 9.99, cat: "accessories", img: "https://m.media-amazon.com/images/I/61S7p6rXmPL._AC_SL1500_.jpg", link: "https://amzn.to/45TMmGt", specs: ["5Gbps Sync Speeds", "Individual LED Toggles", "Plug & Play Ready"], tags: { interest: "accessories", tier: "low" }, slotType: "none" },
+  { name: "VIENON 4-Port USB Hub (3.3ft Cable)", price: 12.99, cat: "accessories", img: "https://m.media-amazon.com/images/I/61k9B8f0U2L._AC_SL1500_.jpg", link: "https://amzn.to/4kob1ZO", specs: ["Long Cable Extension", "Fast Data Transfer", "Slim Design"], tags: { interest: "accessories", tier: "low" }, slotType: "none" },
+  { name: "LISEN Adjustable Cell Phone Stand", price: 15.99, cat: "accessories", img: "https://m.media-amazon.com/images/I/71vunG12qML._AC_SL1500_.jpg", link: "https://amzn.to/3MfHuVA", specs: ["Heavy Duty Base", "Adjustable Height", "Anti-Slip Silicone"], tags: { interest: "accessories", tier: "low" }, slotType: "none" },
+  { name: "WOLFBOX MF50 Compressed Air Duster", price: 59.99, cat: "accessories", img: "https://m.media-amazon.com/images/I/71O8-pY7XQL._AC_SL1500_.jpg", link: "https://amzn.to/4a3298w", specs: ["Powerful Motor", "Rechargeable Battery", "Multi-use Attachments"], tags: { interest: "accessories", tier: "high" }, slotType: "none" },
+  { name: "Lamicall Sticky Headphone Stand", price: 11.99, cat: "accessories", img: "https://m.media-amazon.com/images/I/61Y-h7U70SL._AC_SL1500_.jpg", link: "https://amzn.to/4kr2Dcc", specs: ["Under Desk Mount", "Strong Adhesive", "Cable Organizer"], tags: { interest: "accessories", tier: "low" }, slotType: "none" }
+];
+
+
+let currentCat = 'all';
+let favorites = [];
+let quizInterest = '';
+
+// Initialize
+document.addEventListener("DOMContentLoaded", () => {
+    applyFilters();
+    startUrgencySim();
+});
+
+// Search Dropdown Toggle
+function toggleSearch(e) {
+    const dropdown = document.getElementById('search-dropdown');
+    dropdown.classList.toggle('open');
+    if(dropdown.classList.contains('open')) {
+        document.getElementById('search-input').focus();
+    }
+}
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.header-actions') && !e.target.closest('.search-dropdown')) {
+        document.getElementById('search-dropdown').classList.remove('open');
+    }
+});
+
+// Category Filter
+function setCategory(cat, el) {
+    document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    currentCat = cat;
+    
+    let title = "All Curated Collections";
+    if(cat !== 'all') title = cat.charAt(0).toUpperCase() + cat.slice(1) + " Collection";
+    document.getElementById('grid-title').innerText = title;
+    
+    applyFilters();
+}
+
+// Main Filter Logic
+function applyFilters() {
+    const searchTerm = document.getElementById('search-input').value.toLowerCase();
+    const maxPrice = parseFloat(document.getElementById('price-range').value);
+    
+    const filtered = products.filter(p => {
+        const matchCat = (currentCat === 'all' || p.cat === currentCat);
+        const matchPrice = p.price <= maxPrice;
+        const matchSearch = p.name.toLowerCase().includes(searchTerm);
+        return matchCat && matchPrice && matchSearch;
+    });
+    
+    renderGrid(filtered);
+}
+
+// Render Products
+function renderGrid(data) {
+    const list = document.getElementById('list');
+    list.innerHTML = '';
+    
+    if(data.length === 0) {
+        list.innerHTML = `<p style="color:var(--text-muted); grid-column:1/-1; text-align:center; padding: 40px;">No products found matching your criteria.</p>`;
+        return;
+    }
+    
+    data.forEach(p => {
+        const isFav = favorites.includes(p.id);
+        const favClass = isFav ? 'active' : '';
+        const bsClass = p.bestSeller ? 'best-seller' : '';
+        const bsBadge = p.bestSeller ? `<div class="best-seller-badge"><i class="fa-solid fa-crown"></i> Top Pick</div>` : '';
+        
+        let specsHTML = p.specs.map(s => `<div class="spec-item"><i class="fa-solid fa-check"></i> ${s}</div>`).join('');
+        
+        const cardHTML = `
+            <div class="card ${bsClass}">
+                ${bsBadge}
+                <div class="card-top-actions">
+                    <button class="card-icon-btn wish-btn ${favClass}" onclick="toggleFav(${p.id}, this)">
+                        <i class="fa-solid fa-heart"></i>
+                    </button>
+                </div>
+                <div class="img-box" onclick="window.open('${p.link}', '_blank')">
+                    <img src="${p.img}" alt="${p.name}">
+                    <div class="specs-overlay">
+                        <div style="font-size:12px; font-weight:700; color:#fff; margin-bottom:4px;">Key Specs:</div>
+                        ${specsHTML}
+                    </div>
+                </div>
+                <div class="card-info-wrap">
+                    <div class="title" onclick="window.open('${p.link}', '_blank')">${p.name}</div>
+                    <div class="card-meta">
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.8</div>
+                        <div class="price">$${p.price.toFixed(2)}</div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="${p.link}" target="_blank" class="btn">View Deal</a>
+                    </div>
+                </div>
+            </div>
+        `;
+        list.insertAdjacentHTML('beforeend', cardHTML);
+    });
+}
+
+// Reset Everything
+function resetAll() {
+    document.getElementById('search-input').value = '';
+    document.getElementById('price-range').value = 400;
+    document.getElementById('price-val').innerText = '400';
+    setCategory('all', document.querySelector('.cat-chip'));
+}
+
+// Favorites Logic
+function toggleFav(id, btn) {
+    const index = favorites.indexOf(id);
+    if(index > -1) {
+        favorites.splice(index, 1);
+        btn.classList.remove('active');
+        showToast("Removed from favorites");
+    } else {
+        favorites.push(id);
+        btn.classList.add('active');
+        showToast("Added to favorites ??");
+    }
+    document.getElementById('fav-count').innerText = favorites.length;
+}
+
+function showFavorites(e) {
+    e.preventDefault();
+    const container = document.getElementById('fav-list-container');
+    container.innerHTML = '';
+    
+    if(favorites.length === 0) {
+        container.innerHTML = `<p style="color:var(--text-muted);">Your favorite list is empty.</p>`;
+    } else {
+        const favProducts = products.filter(p => favorites.includes(p.id));
+        favProducts.forEach(p => {
+            container.innerHTML += `
+                <div style="display:flex; align-items:center; gap:12px; background:rgba(0,0,0,0.3); padding:10px; border-radius:12px; border:1px solid var(--border-color);">
+                    <img src="${p.img}" style="width:50px; height:50px; object-fit:contain; background:#fff; border-radius:8px; padding:2px;">
+                    <div style="flex:1;">
+                        <div style="font-size:13px; font-weight:600; color:#fff; margin-bottom:4px; display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden;">${p.name}</div>
+                        <div style="font-weight:700; color:var(--amazon-gold); font-size:14px;">$${p.price.toFixed(2)}</div>
+                    </div>
+                    <a href="${p.link}" target="_blank" class="card-icon-btn" style="background:var(--accent); color:#fff; text-decoration:none;"><i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            `;
+        });
+    }
+    document.getElementById('quick-modal').classList.add('active');
+}
+
+// Modals
+function closeModal(e) {
+    document.getElementById('quick-modal').classList.remove('active');
+}
+
+// AI Gift Wizard
+function openGiftModal() {
+    document.getElementById('g-step-1').classList.add('active');
+    document.getElementById('g-step-2').classList.remove('active');
+    document.getElementById('g-step-3').classList.remove('active');
+    document.getElementById('gift-modal').classList.add('active');
+}
+function closeGiftModal(e) {
+    document.getElementById('gift-modal').classList.remove('active');
+}
+
+function nextQuizStep(interestVal) {
+    quizInterest = interestVal;
+    document.getElementById('g-step-1').classList.remove('active');
+    document.getElementById('g-step-2').classList.add('active');
+}
+
+function finishQuiz(tierVal) {
+    document.getElementById('g-step-2').classList.remove('active');
+    document.getElementById('g-step-3').classList.add('active');
+    
+    const results = products.filter(p => p.cat === quizInterest && p.tier === tierVal);
+    const container = document.getElementById('quiz-results-container');
+    container.innerHTML = '';
+    
+    if(results.length === 0) {
+        container.innerHTML = `<p style="color:var(--text-muted); font-size:14px;">No perfect match found, but check out our curated collections!</p>`;
+    } else {
+        results.slice(0, 3).forEach(p => {
+            container.innerHTML += `
+                <div style="display:flex; align-items:center; gap:16px; background:rgba(0,0,0,0.4); padding:16px; border-radius:12px; border:1px solid rgba(99,102,241,0.3);">
+                    <img src="${p.img}" style="width:60px; height:60px; object-fit:contain; background:#fff; border-radius:8px; padding:4px;">
+                    <div style="flex:1;">
+                        <div style="font-size:14px; font-weight:700; color:#fff; margin-bottom:6px; line-height:1.3;">${p.name}</div>
+                        <div style="font-weight:800; color:var(--amazon-gold); font-size:16px;">$${p.price.toFixed(2)}</div>
+                    </div>
+                    <a href="${p.link}" target="_blank" class="btn" style="flex-grow:0; padding:10px 16px;">Buy</a>
+                </div>
+            `;
+        });
+    }
+}
+
+// Toast
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.innerHTML = `<i class="fa-solid fa-bell" style="color:var(--amazon-gold);"></i> ${msg}`;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// Simulated Urgency Notification
+function startUrgencySim() {
+    setInterval(() => {
+        if(Math.random() > 0.6) {
+            const randomItem = products[Math.floor(Math.random() * products.length)];
+            const popup = document.getElementById('urgency-popup');
+            document.getElementById('urg-img').src = randomItem.img;
+            document.getElementById('urg-text').innerHTML = `Someone in New York just bought<br><strong>${randomItem.name.substring(0, 20)}...</strong>`;
+            
+            popup.onclick = () => window.open(randomItem.link, '_blank');
+            popup.classList.add('show');
+            
+            setTimeout(() => { popup.classList.remove('show'); }, 4000);
+        }
+    }, 15000); // Check every 15 seconds
+}
+</script>
+</body>
+</html>
